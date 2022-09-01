@@ -45,47 +45,6 @@ variable "vpc_tags" {
 }
 
 
-#EC2
-
-variable "ec2_name" {
-  type        = string
-  default     = "Amazon Linux 2 Instance"
-}
-
-variable "ec2_ami" {
-  type        = string
-  default     = "ami-0c0fcae772c706bbe"
-}
-
-variable "ec2_instance_type" {
-  type        = string
-  default     = "t4g.micro"
-}
-
-variable "ec2_key_name" {
-  type        = string
-  default     = "amikey"
-}
-
-
-variable "ec2_tags" {
-  type        = map(string)
-  default = {
-    Terraform   = "true"
-    env = "dev"
-  }
-}
-
-variable "volume_tags" {
-  type        = map(string)
-  default = {
-    Terraform   = "true"
-    env = "dev"
-    Name = "amilinux"
-  }
-}
-
-
 #Security Group
 
 variable "securitygroup_name" {
@@ -111,28 +70,6 @@ variable "role_name" {
 
 
 variable "role_tags" {
-  type        = map(string)
-  default = {
-    Terraform   = "true"
-    env = "dev"
-  }
-}
-
-
-#Route 53
-
-variable "route53_zone_name" {
-  type        = string
-  default     = ""
-}
-
-variable "route53_record_name" {
-  type        = string
-  default     = ""
-}
-
-
-variable "route53_tags" {
   type        = map(string)
   default = {
     Terraform   = "true"
