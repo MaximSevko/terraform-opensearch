@@ -1,38 +1,10 @@
 
-data "aws_subnet_ids" "example" {
-  vpc_id = data.aws_vpc.example.id
-
-  tags = {
-    Tier = "private"
-  }
-}
-
-data "aws_region" "current" {}
-
-data "aws_caller_identity" "current" {}
-
-resource "aws_security_group" "example" {
-  name        = "Opensearch-${var.domain_name}"
-  description = "Managed by Terraform"
-  vpc_id      = module.vpc.vpc_id
-
-  ingress {
-    from_port = 443
-    to_port   = 443
-    protocol  = "tcp"
-
-    cidr_blocks = [
-      data.aws_vpc.example.cidr_block,
-    ]
-  }
-}
-
 resource "aws_iam_service_linked_role" "example" {
   aws_service_name = "opensearchservice.amazonaws.com"
 }
 
 resource "aws_opensearch_domain" "example" {
-  domain_name    = var.domain
+  domain_name    = var.domain_name
   engine_version = "OpenSearch_1.3"
 
    
@@ -50,11 +22,8 @@ resource "aws_opensearch_domain" "example" {
   }
 
   vpc_options {
-    subnet_ids = [
-      data.aws_subnet_ids.example.ids[0],
-    ]
-
-    security_group_ids = [aws_security_group.example.id]
+    subnet_id = element(module.vpc.public_subnets, 0)
+    vpc_security_group_ids = [module.security_group.security_group_id]
   }
 
   access_policies = <<CONFIG
@@ -71,9 +40,7 @@ resource "aws_opensearch_domain" "example" {
 }
 CONFIG
 
-  tags = {
-    Domain = "TestDomain"
-  }
+  tags = var.domain_tags
 
   depends_on = [aws_iam_service_linked_role.example]
 }
