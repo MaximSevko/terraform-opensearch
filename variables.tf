@@ -76,3 +76,19 @@ variable "role_tags" {
     env = "dev"
   }
 }
+
+#OpenSearch
+
+variable "domain_name" {
+  type        = string
+  default     = "OpenSearchTest"
+}
+
+
+variable "domain_tags" {
+  type        = map(string)
+  default = {
+    Terraform   = "true"
+    env = "dev"
+  }
+}
