@@ -3,7 +3,7 @@ module "security_group" {
   version = "~> 4.0"
 
   name        = var.securitygroup_name
-  description = "Security group for EC2 instance"
+  description = "Security group for OpenSearch"
   vpc_id      = module.vpc.vpc_id
 
   ingress_ipv6_cidr_blocks = ["::/0"]
