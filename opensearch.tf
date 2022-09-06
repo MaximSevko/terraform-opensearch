@@ -1,4 +1,3 @@
-variable "vpc" {}
 
 variable "domain" {
   default = "tf-test"
@@ -44,24 +43,28 @@ resource "aws_iam_service_linked_role" "example" {
 
 resource "aws_opensearch_domain" "example" {
   domain_name    = var.domain
-  engine_version = "OpenSearch_1.0"
+  engine_version = "OpenSearch_1.3"
+
+   
+
+  ebs_options {
+    ebs_enabled = true
+    volume_size = 10
+    volume_type = "gp3"
+  }
 
   cluster_config {
-    instance_type          = "m4.large.search"
-    zone_awareness_enabled = true
+    instance_count = 1
+    instance_type          = "t3.small.search"
+    zone_awareness_enabled = false
   }
 
   vpc_options {
     subnet_ids = [
       data.aws_subnet_ids.example.ids[0],
-      data.aws_subnet_ids.example.ids[1],
     ]
 
     security_group_ids = [aws_security_group.example.id]
-  }
-
-  advanced_options = {
-    "rest.action.multi.allow_explicit_index" = "true"
   }
 
   access_policies = <<CONFIG
