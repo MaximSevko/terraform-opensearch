@@ -1,3 +1,4 @@
+data "aws_caller_identity" "current" {}
 
 resource "aws_iam_service_linked_role" "example" {
   aws_service_name = "opensearchservice.amazonaws.com"
@@ -34,7 +35,7 @@ resource "aws_opensearch_domain" "example" {
             "Action": "es:*",
             "Principal": "*",
             "Effect": "Allow",
-            "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.domain}/*"
+            "Resource": "arn:aws:es:${var.AWS_Region}:${data.aws_caller_identity.current.account_id}:domain/${var.domain_name}/*"
         }
     ]
 }
