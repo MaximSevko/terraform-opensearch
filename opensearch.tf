@@ -1,14 +1,4 @@
 
-variable "domain" {
-  default = "tf-test"
-}
-
-data "aws_vpc" "example" {
-  tags = {
-    Name = var.vpc
-  }
-}
-
 data "aws_subnet_ids" "example" {
   vpc_id = data.aws_vpc.example.id
 
@@ -22,9 +12,9 @@ data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
 resource "aws_security_group" "example" {
-  name        = "${var.vpc}-opensearch-${var.domain}"
+  name        = "Opensearch-${var.domain_name}"
   description = "Managed by Terraform"
-  vpc_id      = data.aws_vpc.example.id
+  vpc_id      = module.vpc.vpc_id
 
   ingress {
     from_port = 443
@@ -55,7 +45,7 @@ resource "aws_opensearch_domain" "example" {
 
   cluster_config {
     instance_count = 1
-    instance_type          = "t3.small.search"
+    instance_type  = "t3.small.search"
     zone_awareness_enabled = false
   }
 
