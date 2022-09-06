@@ -23,8 +23,8 @@ resource "aws_opensearch_domain" "example" {
   }
 
   vpc_options {
-    subnet_id = element(module.vpc.public_subnets, 0)
-    vpc_security_group_id = module.security_group.security_group_id
+    subnet_ids = element(module.vpc.public_subnets, 0)
+    vpc_security_group_ids = [module.security_group.security_group_id]
   }
 
   access_policies = <<CONFIG
