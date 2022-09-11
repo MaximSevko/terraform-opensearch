@@ -81,7 +81,7 @@ variable "role_tags" {
 
 variable "domain_name" {
   type        = string
-  default     = "OpenSearchTest"
+  default     = "opensearchtest"
 }
 
 
