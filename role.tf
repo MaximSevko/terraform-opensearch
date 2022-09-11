@@ -11,7 +11,7 @@ resource "aws_iam_role" "role" {
         "sts:SetSourceIdentity"
       ]
       Principal = {
-               "Service": "ec2.amazonaws.com"
+               "Service": "es.amazonaws.com"
       }
       Effect = "Allow"
       Sid    = ""
