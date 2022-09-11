@@ -18,9 +18,9 @@ resource "aws_iam_role" "role" {
     }]
   })
 }
-
-resource "aws_iam_instance_profile" "test" {
-  name      = var.role_name
-  role = aws_iam_role.role.name
-}
+#
+#resource "aws_iam_instance_profile" "test" {
+#  name      = var.role_name
+#  role = aws_iam_role.role.name
+#}
 

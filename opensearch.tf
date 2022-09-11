@@ -1,8 +1,5 @@
 data "aws_caller_identity" "current" {}
 
-resource "aws_iam_service_linked_role" "linkrole" {
-  aws_service_name = "opensearchservice.amazonaws.com"
-}
 
 resource "aws_opensearch_domain" "domain" {
   domain_name    = var.domain_name
@@ -43,5 +40,5 @@ CONFIG
 
   tags = var.domain_tags
 
-  depends_on = [aws_iam_service_linked_role.linkrole]
+  depends_on = [aws_iam_role.role]
 }
