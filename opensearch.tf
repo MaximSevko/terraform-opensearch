@@ -42,3 +42,14 @@ CONFIG
 
   depends_on = [aws_iam_role.role]
 }
+
+resource "aws_opensearch_domain_saml_options" "example" {
+  domain_name = aws_opensearch_domain.domain.domain_name
+  saml_options {
+    enabled = true
+    idp {
+      entity_id        = "https://example.com"
+      metadata_content = file("./saml-metadata.xml")
+    }
+  }
+}
